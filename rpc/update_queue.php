@@ -1,5 +1,5 @@
 <?php
-	session_start();
+	require_once('../CONFIG.php');
 //	if(!$_SESSION['logged_in']){die();}
 
 	$current_hash_id = isset($_POST['hash_id']) ? $_POST['hash_id'] : NULL ;

@@ -1,11 +1,6 @@
 <?php
 require_once('../CONFIG.php');
 
-set_include_path(implode(PATH_SEPARATOR, array(
-    ZEND_INCLUDE_PATH,
-    get_include_path(),
-)));
-
 class base {
 	private $table;
 	private $pk;
@@ -17,13 +12,26 @@ class base {
 		$this->pk = $pk ? $pk : 'id';
 		$this->id = $id;
 
-		require_once('Zend/Db.php');
-		$this->db = Zend_Db::factory('Pdo_Mysql', array(
-			'host'     => DB_HOST,
-			'username' => DB_USER,
-			'password' => DB_PASSWORD,
-			'dbname'   => DB_NAME
-		));
+		try {
+			require_once('Zend/Db.php');
+			$this->db = Zend_Db::factory('Pdo_Mysql', array(
+				'host'     => DB_HOST,
+				'username' => DB_USER,
+				'password' => DB_PASSWORD,
+				'dbname'   => DB_NAME
+			));
+		} catch (Exception $e) {
+			die($e->getMessage() . ' base construct');
+		}
+		
+		/*
+			$this->db = new Zend_Db_Adapter_Mysqli(array(
+				'host'     => DB_HOST,
+				'username' => DB_USER,
+				'password' => DB_PASSWORD,
+				'dbname'   => DB_NAME
+			));
+		*/
 	}
 
 //	require_once 'Zend/Loader/Autoloader.php';
@@ -77,6 +85,13 @@ class base {
 		} catch (Exception $e) {
 			return FALSE;
 		}
+	}
+
+	public function debug($input, $label = ''){
+		$result .= "\n" . str_pad(date('c',strtotime("now")), 25, "*", STR_PAD_BOTH) . "\n";
+		$result .= print_r($input,TRUE);
+		$result .= "\n" . str_pad($label, 25, "*", STR_PAD_BOTH) . "\n";
+		file_put_contents('../log/db_log.txt', $result, FILE_APPEND);
 	}
 
 }

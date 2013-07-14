@@ -1,5 +1,5 @@
 <?php
-//check if logged in and is_admin
+require_once('../CONFIG.php');
 
 ?>
 
