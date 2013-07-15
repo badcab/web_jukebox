@@ -1,5 +1,5 @@
 <?php
- class login extends base {
+ class Login extends Base {
  	function __construct($id = NULL){
 		$table = 'login';
 		$pk = 'id';

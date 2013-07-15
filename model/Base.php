@@ -1,7 +1,7 @@
 <?php
-require_once('../CONFIG.php');
+//require_once('../CONFIG.php');
 
-class base {
+class Base {
 	private $table;
 	private $pk;
 	private $id;
@@ -13,7 +13,7 @@ class base {
 		$this->id = $id;
 
 		try {
-			require_once('Zend/Db.php');
+			//require_once('Zend/Db.php');
 			$this->db = Zend_Db::factory('Pdo_Mysql', array(
 				'host'     => DB_HOST,
 				'username' => DB_USER,
@@ -59,7 +59,7 @@ class base {
 
 	public function save($data){
 		try {
-			if($data[$this->pk]){
+			if(isset($data[$this->pk]) && $data[$this->pk]){
 				$this->db->update($this->table,$data,"{$this->pk} = {$data[$this->pk]}");
 				return $data[$this->pk];
 			} else {

@@ -5,7 +5,9 @@
 	$current_hash_id = isset($_POST['hash_id']) ? $_POST['hash_id'] : NULL ;
 	$advance_by_one = isset($_POST['advance_by_one']) ? $_POST['advance_by_one'] : FALSE ;
 
-//grab the full rows from the current_vote_stack
+	$cvs = new Current_vote_stack();
+
+	
 
 //if $current_hash_id is in the array and advance_by_one is false then set the update_list opt to false
 
