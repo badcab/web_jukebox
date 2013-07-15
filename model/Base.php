@@ -1,6 +1,4 @@
 <?php
-//require_once('../CONFIG.php');
-
 class Base {
 	private $table;
 	private $pk;
@@ -13,7 +11,6 @@ class Base {
 		$this->id = $id;
 
 		try {
-			//require_once('Zend/Db.php');
 			$this->db = Zend_Db::factory('Pdo_Mysql', array(
 				'host'     => DB_HOST,
 				'username' => DB_USER,
@@ -23,21 +20,9 @@ class Base {
 		} catch (Exception $e) {
 			die($e->getMessage() . ' base construct');
 		}
-		
-		/*
-			$this->db = new Zend_Db_Adapter_Mysqli(array(
-				'host'     => DB_HOST,
-				'username' => DB_USER,
-				'password' => DB_PASSWORD,
-				'dbname'   => DB_NAME
-			));
-		*/
 	}
 
-//	require_once 'Zend/Loader/Autoloader.php';
-//	$autoloader = Zend_loader_Autoloader::getInstance();
-
-	public function get($id = NULL){ //try catch this stuff
+	public function get($id = NULL){
 		$id = ($id) ? $id : $this->id;
 		try {
 			$select = $this->db->select()->from($this->table)->where("{$this->pk} = ?", $id);
@@ -47,7 +32,7 @@ class Base {
 		}
 	}
 
-	public function delete($id = NULL){ //try catch this stuff
+	public function delete($id = NULL){
 		$id = ($id) ? $id : $this->id;
 		try {
 			$this->db->delete($this->table,"{$this->pk} = {$id}");
