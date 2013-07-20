@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `current_vote_stack` (
   `song1_desc` varchar(150) DEFAULT NULL,
   `song2_desc` varchar(150) DEFAULT NULL,
   `song3_desc` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`current_vote_stack`.`id_hash`)
+  PRIMARY KEY (`id_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `login` (
@@ -24,13 +24,13 @@ CREATE TABLE IF NOT EXISTS `login` (
   `password` varchar(255) NOT NULL,
   `is_admin` tinyint(2) NOT NULL DEFAULT 0,
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`login`.`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `queue` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `song_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`queue`.`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `songs` (
@@ -40,31 +40,31 @@ CREATE TABLE IF NOT EXISTS `songs` (
   `file_path` varchar(255) NOT NULL,
   `category` varchar(50) NOT NULL DEFAULT 'UNKNOWN',
   `has_played` tinyint(2) unsigned NOT NULL DEFAULT 0,
-  PRIMARY KEY (`songs`.`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 ALTER TABLE `current_vote_stack`
   ADD CONSTRAINT `current_vote_stack_ibfk_1` 
   FOREIGN KEY (`current_vote_stack`.`song1_id`) 
-  REFERENCES `songs` (`songs`.`id`) 
+  REFERENCES `songs` (`id`) 
   ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `current_vote_stack`
   ADD CONSTRAINT `current_vote_stack_ibfk_2` 
   FOREIGN KEY (`current_vote_stack`.`song2_id`) 
-  REFERENCES `songs` (`songs`.`id`) 
+  REFERENCES `songs` (`id`) 
   ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `current_vote_stack`
   ADD CONSTRAINT `current_vote_stack_ibfk_3` 
   FOREIGN KEY (`current_vote_stack`.`song3_id`) 
-  REFERENCES `songs` (`songs`.`id`) 
+  REFERENCES `songs` (`id`) 
   ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `queue`
   ADD CONSTRAINT `queue_ibfk_1` 
   FOREIGN KEY (`queue`.`song_id`) 
-  REFERENCES `songs` (`songs`.`id`) 
+  REFERENCES `songs` (`id`) 
   ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*functions*/
