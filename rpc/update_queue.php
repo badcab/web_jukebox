@@ -4,10 +4,21 @@
 
 	$current_hash_id = isset($_POST['id_hash']) ? $_POST['id_hash'] : NULL ;
 	$advance_by_one = isset($_POST['advance_by_one']) ? $_POST['advance_by_one'] : FALSE ;
+	//maybe I should change advance_by_one to vote for ID
 
 	$cvs = new Current_vote_stack();
 
-	$next = $cvs->getNext();//$current_hash_id
+	if($advance_by_one){
+		$next = $cvs->getNext($current_hash_id);
+	} else {
+		$next = $cvs->get($current_hash_id);
+	}
+
+	if(!$next){
+		//somthing unexpected happended, acuracy is not important for this so we will just start over
+		$next = $cvs->getNext(0);
+	}
+	
 
 
 /*

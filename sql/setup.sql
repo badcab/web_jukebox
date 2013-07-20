@@ -87,25 +87,23 @@ BEGIN
 END $$
 DELIMITER ;
 
-DELIMITER $$ --fail
+DELIMITER $$ 
 DROP FUNCTION IF EXISTS SAVE_VOTE_STACK $$
 CREATE FUNCTION SAVE_VOTE_STACK ( SONG1_ID INT(11), SONG2_ID INT(11), SONG3_ID INT(11), SONG1_ARTIST varchar(50), SONG2_ARTIST varchar(50), SONG3_ARTIST varchar(50), SONG1_NAME varchar(50), SONG2_NAME varchar(50), SONG3_NAME varchar(50)) RETURNS INT
 BEGIN
   INSERT INTO `web_jukebox`.`current_vote_stack` (
-    `song1_id`, 
-    `song2_id`, 
-    `song3_id`, 
-    `song1_desc`, 
-    `song2_desc`, 
+    `id_hash` ,
+    `song1_id` ,
+    `song2_id` ,
+    `song3_id` ,
+    `song1_desc` ,
+    `song2_desc` ,
     `song3_desc`
-  ) VALUES (
-    SONG1_ID,
-    SONG2_ID,
-    SONG3_ID,
-    CONCAT(SONG1_NAME  ,' - ', SONG1_ARTIST),
-    CONCAT(SONG2_NAME  ,' - ', SONG2_ARTIST),
-    CONCAT(SONG3_NAME  ,' - ', SONG3_ARTIST),
+  )
+  VALUES (
+    CURRENT_TIMESTAMP , SONG1_ID, SONG2_ID, SONG3_ID, CONCAT(SONG1_NAME  ,' - ', SONG1_ARTIST), CONCAT(SONG2_NAME  ,' - ', SONG2_ARTIST), CONCAT(SONG3_NAME  ,' - ', SONG3_ARTIST)
   );
+
   RETURN 0;
 END $$
 DELIMITER ;
@@ -138,7 +136,7 @@ END $$
 DELIMITER ;
 
 /*stored procedure*/
-DELIMITER $$ --fail
+DELIMITER $$ /*fail*/
 DROP PROCEDURE IF EXISTS web_jukebox.ADD_TO_CURRENT_VOTE_STACK $$
 CREATE PROCEDURE web_jukebox.ADD_TO_CURRENT_VOTE_STACK ()
 BEGIN
@@ -149,7 +147,7 @@ BEGIN
 
   SET @SONG2_RANDOM_SELECT_CATEGORY_EXPIRE =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`id` != @SONG1_RANDOM_SELECT ORDER BY RAND() LIMIT 1);
   SET @SONG3_RANDOM_SELECT_CATEGORY_EXPIRE =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`id` != @SONG1_RANDOM_SELECT AND `songs`.`id` != @SONG2_RANDOM_SELECT ORDER BY RAND() LIMIT 1);
---add code to these selects to not grab songs already in the vote_stack
+/*add code to these selects to not grab songs already in the vote_stack*/
   SET @SONG1_ID = @SONG1_RANDOM_SELECT;
   SET @SONG2_ID = SET_SONG ( @SONG2_RANDOM_SELECT, @SONG2_RANDOM_SELECT_CATEGORY_EXPIRE);
   SET @SONG3_ID = SET_SONG ( @SONG3_RANDOM_SELECT, @SONG3_RANDOM_SELECT_CATEGORY_EXPIRE);
