@@ -6,3 +6,19 @@ SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
 ***************************2013-07-20T10:58:01-05:00****************************
 SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
 ************************************base get************************************
+
+***************************2013-07-20T15:03:59-05:00****************************
+SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
+************************************base get************************************
+
+***************************2013-07-20T15:13:52-05:00****************************
+SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
+************************************base get************************************
+
+***************************2013-07-20T15:13:53-05:00****************************
+SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
+************************************base get************************************
+
+***************************2013-07-20T15:13:54-05:00****************************
+SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
+************************************base get************************************

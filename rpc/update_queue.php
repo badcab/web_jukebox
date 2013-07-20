@@ -1,6 +1,6 @@
 <?php
 	require_once('../CONFIG.php');
-//	if(!$_SESSION['logged_in']){die();}
+
 
 	$current_hash_id = isset($_POST['id_hash']) ? $_POST['id_hash'] : NULL ;
 	$advance_by_one = isset($_POST['advance_by_one']) ? $_POST['advance_by_one'] : FALSE ;

@@ -77,6 +77,7 @@ class Base {
 	}
 
 	public function debug($input, $label = ''){
+		$result = '';
 		$result .= "\n" . str_pad(date('c',strtotime("now")), 80, "*", STR_PAD_BOTH) . "\n";
 		$result .= print_r($input,TRUE);
 		$result .= "\n" . str_pad($label, 80, "*", STR_PAD_BOTH) . "\n";

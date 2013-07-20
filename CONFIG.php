@@ -12,10 +12,22 @@ set_include_path(get_include_path() . PATH_SEPARATOR . ZEND_INCLUDE_PATH);
 require_once('Zend/Loader.php');
 Zend_Loader::loadClass('Zend_Db');
 
-foreach (glob(dirname(__FILE__)."/model/*.php") as $filename)
-{
+foreach (glob(dirname(__FILE__)."/model/*.php") as $filename){
 	include $filename;
 }
 
 session_start();
+
+function loginCheck(){
+	if(!isset($_SESSION['logged_in'])){
+		$_SESSION['logged_in'] = FALSE;
+	}
+
+	if(!$_SESSION['logged_in']){
+		//die();//instead redirect to the login page
+	} 
+}
+
+loginCheck();
+
 ?>

@@ -1,8 +1,6 @@
 <?php
 require_once('../CONFIG.php');
 
-//if(!$_SESSION['logged_in']){die();}
-
 $id_hash = (isset($_POST['id_hash'])) ? $_POST['id_hash'] : NULL ;
 $vote_for = (int)$_POST['vote_for'];
 
