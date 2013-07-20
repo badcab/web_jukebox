@@ -12,7 +12,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . ZEND_INCLUDE_PATH);
 require_once('Zend/Loader.php');
 Zend_Loader::loadClass('Zend_Db');
 
-foreach (glob("model/*.php") as $filename)
+foreach (glob(dirname(__FILE__)."/model/*.php") as $filename)
 {
 	include $filename;
 }
