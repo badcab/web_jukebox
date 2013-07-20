@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" />
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/jquery.mobile-1.3.1.min.js"></script>
-    <script src="js/jquery.blockUI.js"></script>
+    <!-- <script src="js/jquery.blockUI.js"></script> -->
 </head>
 
 <body>
@@ -15,46 +15,44 @@
         <span class="ui-title">Web JukeBox
         </span>
     </div>
-    <div data-role="content">
-        <a data-role="button" href="javascript:" class="song1" onclick="cast_vote('1')">
-            Button
-        </a>
-        <a data-role="button" href="javascript:" class="song2" onclick="cast_vote('2')">
-            Button
-        </a>
-        <a data-role="button" href="javascript:" class="song3" onclick="cast_vote('3')">
-            Button
-        </a>
-        <input type="hidden" value="default_value" name="id_hash"/>
-
-            <div class="ui-grid-a">
-                <div class="ui-block-a">Song
-                </div>
-                <div class="ui-block-b">Votes
-                </div>
-                <div class="ui-block-a" class="song1">Song 1
-                </div>
-                <div class="ui-block-b" id="vote1">1
-                </div>
-                <div class="ui-block-a" class="song2">Song 2
-                </div>
-                <div class="ui-block-b" id="vote2">2
-                </div>
-                <div class="ui-block-a" class="song3">Song 3
-                </div>
-                <div class="ui-block-b" id="vote3">3
-                </div>
+   
+<ul data-role="listview" class="ui-listview">
+    <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-btn-up-c">
+        <div class="ui-btn-inner ui-li">
+            <div class="ui-btn-text">
+                <a href="javascript:" class="ui-link-inherit song1" onclick="cast_vote('1')">
+                    <div></div>
+                    <span class="ui-li-count ui-btn-up-c ui-btn-corner-all" id="vote1"></span>
+                </a>
             </div>
-        
+        </div>
+    </li>
+
+    <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-btn-up-c">
+        <div class="ui-btn-inner ui-li">
+            <div class="ui-btn-text">
+                <a href="javascript:" class="ui-link-inherit song2" onclick="cast_vote('2')">
+                    <div></div>
+                    <span class="ui-li-count ui-btn-up-c ui-btn-corner-all" id="vote2"></span>
+                </a>
+            </div>
+        </div>
+    </li>
+
+    <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-btn-up-c">
+        <div class="ui-btn-inner ui-li">
+            <div class="ui-btn-text">
+                <a href="javascript:" class="ui-link-inherit song3" onclick="cast_vote('3')">
+                    <div></div>
+                    <span class="ui-li-count ui-btn-up-c ui-btn-corner-all" id="vote3"></span>
+                </a>
+            </div>
+        </div>
+    </li>
+
+</ul>
     </div>
-    <!--
-    <div id="footer" data-theme="a" data-role="footer" data-position="fixed"
-    class="footer">
-        <h3>
-            Footer
-        </h3>
-    </div>
-    -->
+
 </div>
 <script type="text/javascript">
     $(function(){
@@ -64,23 +62,24 @@
     });
 
     function remove_overlay(){
-        $.unblockUI();
+       // $.unblockUI();
     }
 
     function login_overlay(){
-        $.blockUI({ message: $('#loginForm') }); 
+      //  $.blockUI({ message: $('#loginForm') }); 
     }
 
     function thinking_overlay(){
         //check if the blockUI is alread up if not set it
         //add overlay class to body with thinking icon
-        $.blockUI({ overlayCSS: { backgroundColor: '#00f' } });
+      //  $.blockUI({ overlayCSS: { backgroundColor: '#00f' } });
     }
 
     function go_dance_overlay(){
         //check if the blockUI is alread up if not set it
         //add overlay letting people to go out and dance
-        $.blockUI({ overlayCSS: { backgroundColor: '#00f' } });
+      //  $.blockUI({ overlayCSS: { backgroundColor: '#00f' } });
+        //change this to a simple show hide of two divs
     }
 
     function cast_vote(vote_for){
@@ -88,7 +87,7 @@
         $.ajax({
             url: 'rpc/cast_vote.php',
             type: 'POST',
-            data: {vote_for: vote_for, hash_id: $('#hash_id').val()}
+            data: {vote_for: vote_for, id_hash: $('#id_hash').val()}
         }).done(function(){
             update_queue(true);
             remove_overlay();//move this to a 'complete' function
@@ -100,13 +99,13 @@
         $.ajax({
             url: 'rpc/update_queue.php',
             type: 'POST',
-            data: { hash_id: $('#hash_id').val(), advance_by_one: advance_by_one},
+            data: { id_hash: $('#id_hash').val(), advance_by_one: advance_by_one},
         }).done(function(result){
             if(result.update_list){
                 thinking_overlay();
-                $('.song1').html(result.song1);
-                $('.song2').html(result.song2);
-                $('.song3').html(result.song3);
+                $('.song1 div').html(result.song1);
+                $('.song2 div').html(result.song2);
+                $('.song3 div').html(result.song3);
                 $('#vote1').html(result.vote1);
                 $('#vote2').html(result.vote2);
                 $('#vote3').html(result.vote3);

@@ -28,6 +28,7 @@ class Base {
 			$select = $this->db->select()->from($this->table)->where("{$this->pk} = ?", $id);
 			return $select->query()->fetch(Zend_Db::FETCH_ASSOC);
 		} catch (Exception $e) {
+			$this->debug($e->getMessage(),'base get');
 			return FALSE;
 		}
 	}
@@ -38,6 +39,7 @@ class Base {
 			$this->db->delete($this->table,"{$this->pk} = {$id}");
 			return TRUE;
 		} catch (Exception $e) {
+			$this->debug($e->getMessage(),'base delete');
 			return FALSE;
 		}
 	}
@@ -52,6 +54,7 @@ class Base {
 				return $this->db->lastInsertId();
 			}
 		} catch (Exception $e) {
+			$this->debug($e->getMessage(),'base save');
 			return FALSE;
 		}
 	}
@@ -68,14 +71,15 @@ class Base {
 				return $select->query()->fetchAll(Zend_Db::FETCH_ASSOC);
 			}
 		} catch (Exception $e) {
+			$this->debug($e->getMessage(),'base getAll');
 			return FALSE;
 		}
 	}
 
 	public function debug($input, $label = ''){
-		$result .= "\n" . str_pad(date('c',strtotime("now")), 25, "*", STR_PAD_BOTH) . "\n";
+		$result .= "\n" . str_pad(date('c',strtotime("now")), 80, "*", STR_PAD_BOTH) . "\n";
 		$result .= print_r($input,TRUE);
-		$result .= "\n" . str_pad($label, 25, "*", STR_PAD_BOTH) . "\n";
+		$result .= "\n" . str_pad($label, 80, "*", STR_PAD_BOTH) . "\n";
 		file_put_contents('../log/db_log.txt', $result, FILE_APPEND);
 	}
 

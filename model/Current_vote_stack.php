@@ -13,8 +13,39 @@
 			$select->order("{$this->pk}")->limit(1);
 			return $select->query()->fetch(Zend_Db::FETCH_ASSOC);
 		} catch (Exception $e) {
-			//return $e->getMessage();
+			$this->debug($e->getMessage(),'current_vote_stack getNext');
 			return FALSE;
-		}	}
- }
+		}	
+	}
+
+	public function castVote($songSlot, $id_hash){
+		try {
+			$this->db->beginTransaction();
+			$current = $this->get($id_hash);//this is throwing an error
+
+			if(!$current[$this->pk]){
+				$this->db->rollBack();
+				return FALSE;
+			}
+			
+			if((int)$songSlot == 1){
+				$current['vote1']++;
+			} elseif ((int)$songSlot == 2) {
+				$current['vote2']++;
+			} elseif ((int)$songSlot == 3) {
+				$current['vote3']++;
+			}
+
+			$this->save($current);
+
+			$this->db->commit();
+			return TRUE;
+			
+		} catch (Exception $e) {
+			$this->db->rollBack();
+			$this->debug($e->getMessage(),'current_vote_stack castVote error');
+			return FALSE;
+		}
+	}
+}
 ?>

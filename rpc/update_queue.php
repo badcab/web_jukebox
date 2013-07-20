@@ -19,21 +19,6 @@
 		$next = $cvs->getNext(0);
 	}
 	
-
-
-/*
-    $next['id_hash'] => 2013-07-19 20:11:10
-    $next['song1_id'] => 6
-    $next['song2_id'] => 11
-    $next['song3_id'] => 12
-    $next['vote1'] => 5
-    $next['vote2'] => 4
-    $next['vote3'] => 6
-    $next['song1_desc'] => tttt
-    $next['song2_desc'] => ttt
-    $next['song3_desc'] => tttt
-*/
-
 	$return = array(
 		'id_hash' => $next['id_hash'],
 		'update_list' => TRUE,

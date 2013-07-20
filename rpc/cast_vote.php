@@ -1,8 +1,22 @@
 <?php
 require_once('../CONFIG.php');
 
-if(!$_SESSION['logged_in']){die();}
-	//for when a user makes a selection of what song to vote for
+//if(!$_SESSION['logged_in']){die();}
 
-	//first check if the vote is still valid and then write the change, lastly return a json object with new vote queue
+$id_hash = (isset($_POST['id_hash'])) ? $_POST['id_hash'] : NULL ;
+$vote_for = (int)$_POST['vote_for'];
+
+$cvs = new Current_vote_stack();
+$next = FALSE;
+
+if($cvs->castVote($vote_for, $id_hash)){
+	$next = $cvs->getNext($id_hash);
+} 
+
+if(!$next){
+	$next = array('error' => TRUE, 'go_dance' => TRUE);
+}
+
+header('Content-type: application/json');
+echo json_encode($next);	
 ?>

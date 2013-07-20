@@ -1,0 +1,8 @@
+
+2013-07-20T10:57:05-05:00
+SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
+********base get*********
+
+***************************2013-07-20T10:58:01-05:00****************************
+SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
+************************************base get************************************
