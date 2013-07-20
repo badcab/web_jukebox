@@ -1,9 +1,9 @@
 <?php
 class Base {
-	private $table;
-	private $pk;
-	private $id;
-	private $db;
+	protected $table;
+	protected $pk;
+	protected $id;
+	protected $db;
 
 	function __construct($table, $pk = NULL, $id = NULL){
 		$this->table = $table;
