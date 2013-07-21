@@ -12,6 +12,11 @@
                 no-repeat;
 }
 
+.modal h1 {
+    text-align:center;
+    margin:40% auto 40% auto;
+}
+
 html.loading {
     overflow: hidden;   
 }

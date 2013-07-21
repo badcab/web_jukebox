@@ -55,38 +55,38 @@
     </ul>
      <div data-theme="a" data-role="footer" data-position="fixed">
         <h3>
-            <a data-role="button" href="javascript:" onclick="skip()">
+            <a data-role="button" href="javascript:" id="skip">
                 Skip
             </a>
         </h3>
     </div>
     
 </div>
-<div class="modal"><!-- Place at bottom of page --></div>
+<div class="modal"><h1></h1></div>
+
 <a href="login_controller_template.php" data-rel="dialog" data-transition="flip" id="login_link">Open dialog</a>
 <script type="text/javascript">
     $(function(){
         $('#login_link').hide();
-        update_queue(false);
-        window.setInterval(function(){update_queue(false)},5000);
+        $('#skip').on('click',function(){
+            thinking_overlay();
+            update_queue(true);
+        });
+        update_queue(true);
+        window.setInterval(function(){update_queue(false)},4000);
     });
 
-    function skip(){
-        //get the current has and make an rpc call to get the next one without casting vote
-    }
-
     function remove_overlay(){
-
        $('html').removeClass("loading"); 
     }
 
     function thinking_overlay(){
-
+        $('.modal h1').html('Loading Next Vote');
         $('html').addClass("loading");
     }
 
     function go_dance_overlay(){
-
+        $('.modal h1').html('Go Dance');
         $('html').addClass("loading");
     }
 
@@ -95,7 +95,7 @@
         $.ajax({
             url: 'rpc/cast_vote.php',
             type: 'POST',
-            data: {vote_for: vote_for, id_hash: $('#id_hash').val()}
+            data: {vote_for: vote_for}
         }).done(function(){
             update_queue(true);
             remove_overlay();//move this to a 'complete' function
@@ -104,10 +104,11 @@
 
     function update_queue(advance_by_one){
         advance_by_one = (typeof advance_by_one === 'undefined') ? false : advance_by_one;
+        advance_by_one = (advance_by_one) ? true : false ;
         $.ajax({
             url: 'rpc/update_queue.php',
             type: 'POST',
-            data: { id_hash: $('#id_hash').val(), advance_by_one: advance_by_one},
+            data: { advance_by_one: advance_by_one},
         }).done(function(result){
             if(result.update_list){
                 thinking_overlay();
@@ -117,8 +118,6 @@
                 $('#vote1').html(result.vote1);
                 $('#vote2').html(result.vote2);
                 $('#vote3').html(result.vote3);
-                //update vote stuff
-                $('#hash_id').val(result.hash_id);
                 remove_overlay();
             }else if(result.max_entropy){
                 go_dance_overlay();

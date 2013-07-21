@@ -22,3 +22,11 @@ SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
 ***************************2013-07-20T15:13:54-05:00****************************
 SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
 ************************************base get************************************
+
+***************************2013-07-20T20:57:01-05:00****************************
+SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
+************************************base get************************************
+
+***************************2013-07-20T20:57:06-05:00****************************
+SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
+************************************base get************************************
