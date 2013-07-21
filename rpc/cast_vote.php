@@ -1,14 +1,13 @@
 <?php
 require_once('../CONFIG.php');
 
-$id_hash = (isset($_POST['id_hash'])) ? $_POST['id_hash'] : NULL ;
 $vote_for = (int)$_POST['vote_for'];
 
 $cvs = new Current_vote_stack();
 $next = FALSE;
 
-if($cvs->castVote($vote_for, $id_hash)){
-	$next = $cvs->getNext($id_hash);
+if($cvs->castVote($vote_for, $_SESSION['current_hash_id'])){
+	$next = $cvs->getNext($_SESSION['current_hash_id']);
 } 
 
 if(!$next){

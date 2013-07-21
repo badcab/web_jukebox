@@ -1,24 +1,24 @@
 <?php
 	require_once('../CONFIG.php');
 
-	//$current_hash_id = isset($_POST['id_hash']) ? $_POST['id_hash'] : FALSE ;
-	$advance_by_one = isset($_POST['advance_by_one']) ? $_POST['advance_by_one'] : FALSE ;
-	//$max_entropy = TRUE;
-	//may need a $_SESSION var to keep track of the current_hash
-	
+	$advance_by_one = isset($_POST['advance_by_one']) && (int)$_POST['advance_by_one'] ? TRUE : FALSE ;
 
 	$cvs = new Current_vote_stack();
 	if(!isset($_SESSION['current_hash_id'])){
 		$first = $cvs->getNext();
+
 		$_SESSION['current_hash_id'] = $first['id_hash'];
 	}
 	
-
+//die(var_dump($_POST['advance_by_one']));
 	if($advance_by_one){
 		$next = $cvs->getNext($_SESSION['current_hash_id']);
 	} else {
 		$next = $cvs->get($_SESSION['current_hash_id']);
+//echo die(print_r($next,TRUE) . ' ' . $_SESSION['current_hash_id']);
 	}
+
+	$_SESSION['current_hash_id'] = $next['id_hash'];
 
 	if($next){
 		$max_entropy = FALSE;

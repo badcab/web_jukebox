@@ -30,3 +30,31 @@ SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
 ***************************2013-07-20T20:57:06-05:00****************************
 SQLSTATE[HY093]: Invalid parameter number: no parameters were bound
 ************************************base get************************************
+
+***************************2013-07-20T21:17:42-05:00****************************
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20:56:00)' at line 1
+***********************************base save************************************
+
+***************************2013-07-20T21:18:19-05:00****************************
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20:11:10)' at line 1
+***********************************base save************************************
+
+***************************2013-07-20T21:19:10-05:00****************************
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20:11:10)' at line 1
+***********************************base save************************************
+
+***************************2013-07-20T21:19:17-05:00****************************
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20:56:00)' at line 1
+***********************************base save************************************
+
+***************************2013-07-20T21:19:40-05:00****************************
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20:56:00)' at line 1
+***********************************base save************************************
+
+***************************2013-07-20T21:20:01-05:00****************************
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20:11:10)' at line 1
+***********************************base save************************************
+
+***************************2013-07-20T21:20:03-05:00****************************
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20:56:00)' at line 1
+***********************************base save************************************

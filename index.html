@@ -73,7 +73,7 @@
             update_queue(true);
         });
         update_queue(true);
-        window.setInterval(function(){update_queue(false)},4000);
+        window.setInterval(function(){update_queue(false)},10000);
     });
 
     function remove_overlay(){
@@ -104,7 +104,7 @@
 
     function update_queue(advance_by_one){
         advance_by_one = (typeof advance_by_one === 'undefined') ? false : advance_by_one;
-        advance_by_one = (advance_by_one) ? true : false ;
+        advance_by_one = (advance_by_one) ? 1 : 0 ;
         $.ajax({
             url: 'rpc/update_queue.php',
             type: 'POST',
