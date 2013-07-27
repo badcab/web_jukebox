@@ -85,7 +85,7 @@ class Base {
 		$result .= "\n" . str_pad(date('c',strtotime("now")), 80, "*", STR_PAD_BOTH) . "\n";
 		$result .= print_r($input,TRUE);
 		$result .= "\n" . str_pad($label, 80, "*", STR_PAD_BOTH) . "\n";
-		file_put_contents('../log/db_log.txt', $result, FILE_APPEND);
+		file_put_contents('../log/db_log.log', $result, FILE_APPEND);
 	}
 
 }
