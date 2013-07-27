@@ -25,6 +25,7 @@
 
 			if(!$current[$this->pk]){
 				$this->db->rollBack();
+				$this->debug('there was a problem getting record','castVote model');
 				return FALSE;
 			}
 			
@@ -35,6 +36,8 @@
 			} elseif ((int)$songSlot == 3) {
 				$current['vote3']++;
 			}
+
+$this->debug($current,'castVote model vote to save');
 
 			$this->save($current);
 

@@ -6,8 +6,8 @@ require_once('../CONFIG.php');
 <html>
 <head>
 	<title>Web JukeBox Admin Console</title>
-	<script src="../js/jquery-1.9.1.min.js"></script>
-	<script src="../js/jquery-ui.js"></script>
+	<script src="../../js/jquery-1.9.1.min.js"></script>
+	<script src="../../js/jquery-ui.js"></script>
 	<link rel="stylesheet" href="../css/jquery-ui.min.css" />
 	<script>
 		$(function() {

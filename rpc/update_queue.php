@@ -6,19 +6,16 @@
 	$cvs = new Current_vote_stack();
 	if(!isset($_SESSION['current_hash_id'])){
 		$first = $cvs->getNext();
-
 		$_SESSION['current_hash_id'] = $first['id_hash'];
 	}
 	
-//die(var_dump($_POST['advance_by_one']));
 	if($advance_by_one){
 		$next = $cvs->getNext($_SESSION['current_hash_id']);
 	} else {
 		$next = $cvs->get($_SESSION['current_hash_id']);
-//echo die(print_r($next,TRUE) . ' ' . $_SESSION['current_hash_id']);
 	}
 
-	$_SESSION['current_hash_id'] = $next['id_hash'];
+	$_SESSION['current_hash_id'] = $next['id_hash'] ? $next['id_hash'] : $_SESSION['current_hash_id'] ;
 
 	if($next){
 		$max_entropy = FALSE;

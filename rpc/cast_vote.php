@@ -11,7 +11,7 @@ if($cvs->castVote($vote_for, $_SESSION['current_hash_id'])){
 } 
 
 if(!$next){
-	$next = array('error' => TRUE, 'go_dance' => TRUE);
+	$next = array('error' => TRUE, 'go_dance' => TRUE);//should trigger a go dance mordal
 }
 
 header('Content-type: application/json');
