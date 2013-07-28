@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `login` (
 CREATE TABLE IF NOT EXISTS `queue` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `song_id` int(11) unsigned NOT NULL,
+  `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -196,22 +197,3 @@ BEGIN
   CALL web_jukebox.ADD_TO_CURRENT_VOTE_STACK ();
 END $$
 DELIMITER ;
-
-/*dummy data*/
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('I am the Best', '2NE1', 'path/to/file', 'kpop');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Fire', '2NE1', 'path/to/file', 'kpop');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Bubble Pop', 'Hyuna', 'path/to/file', 'kpop');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Animal', 'SNSD', 'path/to/file', 'kpop');
-
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Its My Life', 'Bon Jovi', 'path/to/rockfile', 'rock');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Living On A Prayer', 'Bon Jovi', 'path/to/rockfile', 'rock');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Huricate', 'Scorpian', 'path/to/rockfile', 'rock');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Gangsters Paradice', 'Coolio', 'path/to/rockfile', 'rock');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Slipery When Wet', 'Bon Jovi', 'path/to/rockfile', 'rock');
-
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Hey Man', 'Hey Man', 'path/to/indefile', 'inde');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Hey Man2', 'Hey Man2', 'path/to/indefile', 'inde');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Hey Man3', 'Hey Man3', 'path/to/indefile', 'inde');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Hey Man4', 'Hey Man4', 'path/to/indefile', 'inde');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Hey Man5', 'Hey Man5', 'path/to/indefile', 'inde');
-INSERT INTO `web_jukebox`.`songs` (`name`, `artist`, `file_path`, `category`) VALUES ('Hey Man6', 'Hey Man6', 'path/to/indefile', 'inde');
