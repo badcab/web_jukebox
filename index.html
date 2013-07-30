@@ -7,8 +7,15 @@ I have jquery and css files placed outside of this project in the parent directo
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <link rel="stylesheet" href="../css/jquery.mobile-1.3.1.min.css" />
     <link rel="stylesheet" href="css/webJukebox.css" />
-    <script src="../js/jquery-1.9.1.min.js"></script>
-    <script src="../js/jquery.mobile-1.3.1.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">if(typeof jQuery === 'undefined'){ document.write(unescape("%3Cscript src='../js/jquery-1.9.1.min.js' type='text/javascript'%3E%3C/script%3E")); }</script>
+<!--  
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+-->
+
+    <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+    <script type="text/javascript">if(typeof jQuery.mobile === 'undefined'){ document.write(unescape("%3Cscript src='../js/jquery.mobile-1.3.1.min.js' type='text/javascript'%3E%3C/script%3E")); }</script>
+
 </head>
 
 <body>
@@ -66,68 +73,7 @@ I have jquery and css files placed outside of this project in the parent directo
 <div class="modal"><h1></h1></div>
 
 <a href="login_controller_template.php" data-rel="dialog" data-transition="flip" id="login_link">Open dialog</a>
-<script type="text/javascript">
-    $(function(){
-        $('#login_link').hide();
-        $('#skip').on('click',function(){
-            thinking_overlay();
-            update_queue(true);
-        });
-        update_queue(true);
-        window.setInterval(function(){update_queue(false)},3000);
-    });
-
-    function remove_overlay(){
-       $('html').removeClass("loading"); 
-    }
-
-    function thinking_overlay(){
-        $('.modal h1').html('Loading Next Vote');
-        $('html').addClass("loading");
-    }
-
-    function go_dance_overlay(){
-        $('.modal h1').html('Go Dance');
-        $('html').addClass("loading");
-    }
-
-    function cast_vote(vote_for){
-        thinking_overlay();
-        $.ajax({
-            url: 'rpc/cast_vote.php',
-            type: 'POST',
-            data: {vote_for: vote_for}
-        }).done(function(){
-            update_queue(true);
-            remove_overlay();//move this to a 'complete' function
-        });
-    }
-
-    function update_queue(advance_by_one){
-        advance_by_one = (typeof advance_by_one === 'undefined') ? false : advance_by_one;
-        advance_by_one = (advance_by_one) ? 1 : 0 ;
-        $.ajax({
-            url: 'rpc/update_queue.php',
-            type: 'POST',
-            data: { advance_by_one: advance_by_one},
-        }).done(function(result){
-            if(result.update_list){
-                thinking_overlay();
-                $('.song1 div').html(result.song1);
-                $('.song2 div').html(result.song2);
-                $('.song3 div').html(result.song3);
-                $('#vote1').html(result.vote1);
-                $('#vote2').html(result.vote2);
-                $('#vote3').html(result.vote3);
-                remove_overlay();
-            }else if(result.max_entropy){
-                go_dance_overlay();
-            }
-        }).error(function(){
-            alert('there was a problem');
-        })
-    }
-</script>
+<script type="text/javascript" src="js/main.js"></script>
 
 </body>
 </html>
