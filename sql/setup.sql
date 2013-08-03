@@ -116,6 +116,7 @@ DROP FUNCTION IF EXISTS SELECT_WINNING_SONG;
 DELIMITER $$
 CREATE FUNCTION SELECT_WINNING_SONG ( S1_ID INT(11), S2_ID INT(11), S3_ID INT(11), S1_V INT(5), S2_V INT(5), S3_V INT(5)) RETURNS INT
 DETERMINISTIC
+NO SQL
 BEGIN
   IF S1_V = GREATEST(S1_V,S2_V,S3_V) THEN
     RETURN S1_ID;
@@ -143,17 +144,19 @@ DROP PROCEDURE IF EXISTS web_jukebox.ADD_TO_CURRENT_VOTE_STACK;
 DELIMITER $$
 CREATE PROCEDURE web_jukebox.ADD_TO_CURRENT_VOTE_STACK ()
 BEGIN
-  SET @CATAGORY_RANDOM_SELECT =(SELECT `songs`.`category` FROM `songs` WHERE `songs`.`has_played` = 0 ORDER BY RAND() LIMIT 1);
-  SET @SONG1_RANDOM_SELECT =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`has_played` = 0 AND `songs`.`category` = @CATAGORY_RANDOM_SELECT ORDER BY RAND() LIMIT 1);
-  SET @SONG2_RANDOM_SELECT =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`has_played` = 0 AND `songs`.`category` = @CATAGORY_RANDOM_SELECT AND `songs`.`id` != @SONG1_RANDOM_SELECT ORDER BY RAND() LIMIT 1);
-  SET @SONG3_RANDOM_SELECT =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`has_played` = 0 AND `songs`.`category` = @CATAGORY_RANDOM_SELECT AND `songs`.`id` != @SONG1_RANDOM_SELECT AND `songs`.`id` != @SONG2_RANDOM_SELECT ORDER BY RAND() LIMIT 1);
+  SET @CATEGORY_RANDOM_SELECT =(SELECT `songs`.`category` FROM `songs` WHERE `songs`.`has_played` = 0 ORDER BY RAND() LIMIT 1);
+  SET @SONG1_ID =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`has_played` = 0 AND `songs`.`category` = @CATEGORY_RANDOM_SELECT ORDER BY RAND() LIMIT 1);
+  SET @SONG2_ID =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`has_played` = 0 AND `songs`.`category` = @CATEGORY_RANDOM_SELECT AND `songs`.`id` != @SONG1_ID ORDER BY RAND() LIMIT 1);
+  SET @SONG3_ID =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`has_played` = 0 AND `songs`.`category` = @CATEGORY_RANDOM_SELECT AND `songs`.`id` != @SONG1_RANDOM_SELECT AND `songs`.`id` != @SONG2_RANDOM_SELECT ORDER BY RAND() LIMIT 1);
 
-  SET @SONG2_RANDOM_SELECT_CATEGORY_EXPIRE =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`id` != @SONG1_RANDOM_SELECT ORDER BY RAND() LIMIT 1);
-  SET @SONG3_RANDOM_SELECT_CATEGORY_EXPIRE =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`id` != @SONG1_RANDOM_SELECT AND `songs`.`id` != @SONG2_RANDOM_SELECT ORDER BY RAND() LIMIT 1);
+  IF @SONG2_ID IS NULL THEN
+    SET @SONG2_ID =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`id` != @SONG1_ID ORDER BY RAND() LIMIT 1);
+  END IF;
+
+  IF @SONG3_ID IS NULL THEN
+    SET @SONG3_ID =(SELECT `songs`.`id` FROM `songs` WHERE `songs`.`id` NOT IN (@SONG1_ID, @SONG2_ID) ORDER BY RAND() LIMIT 1);
+  END IF;
 /*add code to these selects to not grab songs already in the vote_stack*/
-  SET @SONG1_ID = @SONG1_RANDOM_SELECT;
-  SET @SONG2_ID = SET_SONG ( @SONG2_RANDOM_SELECT, @SONG2_RANDOM_SELECT_CATEGORY_EXPIRE);
-  SET @SONG3_ID = SET_SONG ( @SONG3_RANDOM_SELECT, @SONG3_RANDOM_SELECT_CATEGORY_EXPIRE);
 
   SET @SONG1_ARTIST =(SELECT `songs`.`artist` FROM `songs` WHERE `songs`.`id` = @SONG1_ID);
   SET @SONG2_ARTIST =(SELECT `songs`.`artist` FROM `songs` WHERE `songs`.`id` = @SONG2_ID);
@@ -171,19 +174,25 @@ DROP PROCEDURE IF EXISTS web_jukebox.ADD_TO_QUEUE;
 DELIMITER $$
 CREATE PROCEDURE web_jukebox.ADD_TO_QUEUE ()
 BEGIN
+  DECLARE count int;
+  SET count =(SELECT COUNT(*) FROM `current_vote_stack`);
+
+  IF count = 0 THEN
+    CALL web_jukebox.ADD_TO_CURRENT_VOTE_STACK();
+  END IF;
+
   SET @OLDEST_VOTE_STACK_RECORD =(SELECT `current_vote_stack`.`id_hash` FROM `current_vote_stack` ORDER BY `current_vote_stack`.`id_hash` LIMIT 1);
 
-  SET @S1_V =(SELECT `current_vote_stack`.`song1_id` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
-  SET @S1_ID =(SELECT `current_vote_stack`.`vote1` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
+  SET @S1_ID =(SELECT `current_vote_stack`.`song1_id` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
+  SET @S1_V =(SELECT `current_vote_stack`.`vote1` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
 
-  SET @S2_V =(SELECT `current_vote_stack`.`song2_id` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
-  SET @S2_ID =(SELECT `current_vote_stack`.`vote2` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
+  SET @S2_ID =(SELECT `current_vote_stack`.`song2_id` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
+  SET @S2_V =(SELECT `current_vote_stack`.`vote2` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
 
-  SET @S3_V =(SELECT `current_vote_stack`.`song3_id` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
-  SET @S3_ID =(SELECT `current_vote_stack`.`vote3` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
+  SET @S3_ID =(SELECT `current_vote_stack`.`song3_id` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
+  SET @S3_V =(SELECT `current_vote_stack`.`vote3` FROM `current_vote_stack` WHERE `current_vote_stack`.`id_hash` = @OLDEST_VOTE_STACK_RECORD);
 
   SET @WINNING_SONG_ID = SELECT_WINNING_SONG( @S1_ID, @S2_ID, @S3_ID, @S1_V, @S2_V, @S3_V);
-/*I seems this function is not returning correctly*/
 
   SET @DELETED = DELETE_VOTE_STACK (@OLDEST_VOTE_STACK_RECORD);
   SET @ADDED = ADD_QUEUE (@WINNING_SONG_ID);
