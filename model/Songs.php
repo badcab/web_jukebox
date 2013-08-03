@@ -6,10 +6,21 @@
 		parent::__construct($table, $pk, $id);
 	}
 
+	public function initialStartUp($votePile = 5, $queuePlay = 2)
+	{
+		for($i = 0; $i < $votePile + queuePlay; $i++){
+			$this->db->query('CALL web_jukebox.ADD_TO_CURRENT_VOTE_STACK()');
+		}
+			
+		for($i = 0; $i < $votePile + queuePlay; $i++){
+			$this->db->query('CALL web_jukebox.ADD_TO_QUEUE()');
+		}
+	}
+
 	public function scanMusicDir(){
 		require_once('getid3/getid3.php');
 		$getID3 = new getID3();
-
+		$this->clearSongs();
 		$music_root = scandir(MUSIC_DIRECTORY);
 		$dir = array();
 		foreach($music_root as $file){
@@ -24,7 +35,7 @@
 								'artist' => $audio_tag['tags']['id3v1']['artist'][0],
 								'category' => $file,
 							);
-						} elseif(isset($audio_tag['tags']['quicktime'])) { //add else if and keep checking for compatability
+						} elseif(isset($audio_tag['tags']['quicktime'])) { 
 							$dir[] = array(
 								'file_path' => $file_path,
 								'name' => $audio_tag['tags']['quicktime']['title'][0],
@@ -38,9 +49,7 @@
 								'artist' => $audio_tag['tags']['id3v2']['artist'][0],
 								'category' => $file,
 							);
-						} else {
-							//$dir[] = array('dump' => print_r($audio_tag,TRUE),);
-						}
+						} 
 					}
 				}
 			}
@@ -51,7 +60,13 @@
 	}
 
 	public function clearSongs(){
-		//this should drop all songs in the db
+		try {
+			$this->db->delete($this->table,"{$this->pk} != 0");
+			return TRUE;
+		} catch (Exception $e) {
+			$this->debug($e->getMessage(),'base delete');
+			return FALSE;
+		}
 	}
 }
 ?>

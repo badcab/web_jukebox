@@ -5,8 +5,7 @@ import MySQLdb as mdb
 import sys
 import subprocess
 import time
-#here I should randomly select a song and put it in a que 2 times
-#here I should call the generate vote stack stored procedure 5 times
+#Make sure you have run the 'scan_music_dir.php' script before running this
 
 def shellquote(s):
     return "'" + s.replace("'", "'\\''") + "'"
