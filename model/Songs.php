@@ -8,11 +8,11 @@
 
 	public function initialStartUp($votePile = 5, $queuePlay = 2)
 	{
-		for($i = 0; $i < $votePile + queuePlay; $i++){
+		for($i = 0; $i < $votePile + $queuePlay; $i++){
 			$this->db->query('CALL web_jukebox.ADD_TO_CURRENT_VOTE_STACK()');
 		}
 			
-		for($i = 0; $i < $votePile + queuePlay; $i++){
+		for($i = 0; $i < $queuePlay; $i++){
 			$this->db->query('CALL web_jukebox.ADD_TO_QUEUE()');
 		}
 	}
@@ -59,7 +59,7 @@
 		}
 	}
 
-	public function clearSongs(){
+	private function clearSongs(){
 		try {
 			$this->db->delete($this->table,"{$this->pk} != 0");
 			return TRUE;

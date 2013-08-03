@@ -5,9 +5,11 @@ project for my wedding so I don't have to hire a DJ if someone else finds it use
 
 Dependencies
 ===========
-Zend Framework 1.1X (http://www.zend.com/en/company/community/downloads)
-getid3 (http://getid3.sourceforge.net/)
-mplayer cmd line with the ability to play mp3 and m4a audio
+* Zend Framework 1.1X (http://www.zend.com/en/company/community/downloads)
+
+* getid3 (http://getid3.sourceforge.net/)
+
+* mplayer cmd line with the ability to play mp3 and m4a audio
 
 
 Install
