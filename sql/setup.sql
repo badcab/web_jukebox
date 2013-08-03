@@ -107,7 +107,6 @@ BEGIN
   VALUES (
     CURRENT_TIMESTAMP , SONG1_ID, SONG2_ID, SONG3_ID, CONCAT(SONG1_NAME  ,' - ', SONG1_ARTIST), CONCAT(SONG2_NAME  ,' - ', SONG2_ARTIST), CONCAT(SONG3_NAME  ,' - ', SONG3_ARTIST)
   );
-
   RETURN 0;
 END $$
 DELIMITER ;
@@ -161,11 +160,9 @@ BEGIN
   SET @SONG1_ARTIST =(SELECT `songs`.`artist` FROM `songs` WHERE `songs`.`id` = @SONG1_ID);
   SET @SONG2_ARTIST =(SELECT `songs`.`artist` FROM `songs` WHERE `songs`.`id` = @SONG2_ID);
   SET @SONG3_ARTIST =(SELECT `songs`.`artist` FROM `songs` WHERE `songs`.`id` = @SONG3_ID);
-
   SET @SONG1_NAME =(SELECT `songs`.`name` FROM `songs` WHERE `songs`.`id` = @SONG1_ID);
   SET @SONG2_NAME =(SELECT `songs`.`name` FROM `songs` WHERE `songs`.`id` = @SONG2_ID);
   SET @SONG3_NAME =(SELECT `songs`.`name` FROM `songs` WHERE `songs`.`id` = @SONG3_ID);
-
   SET @RESULT = SAVE_VOTE_STACK(@SONG1_ID, @SONG2_ID, @SONG3_ID, @SONG1_ARTIST, @SONG2_ARTIST, @SONG3_ARTIST, @SONG1_NAME, @SONG2_NAME, @SONG3_NAME);
 END $$
 DELIMITER ;
