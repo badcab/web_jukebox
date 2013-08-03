@@ -177,7 +177,7 @@ BEGIN
   DECLARE count int;
   SET count =(SELECT COUNT(*) FROM `current_vote_stack`);
 
-  IF count = 0
+  IF count = 0 THEN
     CALL web_jukebox.ADD_TO_CURRENT_VOTE_STACK();
   END IF;
 
