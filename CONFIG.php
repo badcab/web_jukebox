@@ -17,18 +17,17 @@ foreach (glob(dirname(__FILE__)."/model/*.php") as $filename){
 	include $filename;
 }
 
-session_start();
-
-function loginCheck(){
-	if(!isset($_SESSION['logged_in'])){
-		$_SESSION['logged_in'] = FALSE;
+function rpc_debug($input, $label = ''){
+	if(!DEV_MODE){
+		return;
 	}
 
-	if(!$_SESSION['logged_in']){
-		//die();//instead redirect to the login page
-	} 
-}
+	$result = '';
+	$result .= "\n" . str_pad(date('c',strtotime("now")), 80, "*", STR_PAD_BOTH) . "\n";
+	$result .= print_r($input,TRUE);
+	$result .= "\n" . str_pad($label, 80, "*", STR_PAD_BOTH) . "\n";
+	file_put_contents('../log/rpc_log.log', $result, FILE_APPEND);
+}	
 
-loginCheck();
-
+session_start();
 ?>
