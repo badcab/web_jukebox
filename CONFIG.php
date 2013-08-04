@@ -17,5 +17,17 @@ foreach (glob(dirname(__FILE__)."/model/*.php") as $filename){
 	include $filename;
 }
 
+function rpc_debug($input, $label = ''){
+	if(!DEV_MODE){
+		return;
+	}
+
+	$result = '';
+	$result .= "\n" . str_pad(date('c',strtotime("now")), 80, "*", STR_PAD_BOTH) . "\n";
+	$result .= print_r($input,TRUE);
+	$result .= "\n" . str_pad($label, 80, "*", STR_PAD_BOTH) . "\n";
+	file_put_contents('../log/rpc_log.log', $result, FILE_APPEND);
+}	
+
 session_start();
 ?>
