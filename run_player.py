@@ -7,18 +7,23 @@ import subprocess
 import time
 #Make sure you have run the 'scan_music_dir.php' script before running this
 
+db_host = 'localhost'
+db_user = 'root'
+db_name = 'web_jukebox'
+db_password = 'blizzard'
+
 def shellquote(s):
     return "'" + s.replace("'", "'\\''") + "'"
 
 while True: #I will want to be able to interupt this proccess so the mc can do maual stuff
 	try:
-		con = mdb.connect('localhost', 'root', 'blizzard', 'web_jukebox')
+		con = mdb.connect(db_host, db_user ,db_password , db_name)
 		cur = con.cursor()
 		cur.execute("SELECT `queue`.`id`, `songs`.`file_path` FROM `queue` JOIN `songs` ON `songs`.`id`=`queue`.`song_id`ORDER BY `time` ASC LIMIT 1")
-		query = cur.fetchone()#need to get the full path and file name of the music
+		query = cur.fetchone()
 		queue_id = query[0]
 		audio_file = query[1]
-		sql_delete = "DELETE FROM `web_jukebox`.`queue` WHERE `queue`.`id` = " + str(queue_id)
+		sql_delete = "DELETE FROM `queue` WHERE `queue`.`id` = " + str(queue_id)
 		cur.execute(sql_delete)
 		con.commit()
 	except mdb.Error, e:

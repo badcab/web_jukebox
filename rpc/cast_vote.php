@@ -17,7 +17,7 @@ if(!$next){
 header('Content-type: application/json');
 echo json_encode($next);
 
-debug($_POST, 'cast_vote rpc');
+//debug($_POST, 'cast_vote rpc');
 function debug($input, $label = ''){
 	if(!DEV_MODE){
 		return;

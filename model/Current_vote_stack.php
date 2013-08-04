@@ -20,7 +20,8 @@
 
 	public function castVote($songSlot, $id_hash){
 		try {
-			//$this->db->beginTransaction();
+//$this->db->beginTransaction();
+$this->debug($id_hash,'timestamp voting on');
 			$current = $this->get($id_hash);//this is throwing an error
 
 			if(!$current[$this->pk]){
@@ -41,7 +42,7 @@ $this->debug($current,'castVote model vote to save');
 
 			$this->save($current);
 
-			//$this->db->commit();
+//$this->db->commit();
 			return TRUE;
 			
 		} catch (Exception $e) {

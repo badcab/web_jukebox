@@ -38,7 +38,7 @@
 	header('Content-type: application/json');
 	echo json_encode($return);
 
-debug($_POST, 'update_queue rpc');
+//debug($_POST, 'update_queue rpc');
 function debug($input, $label = ''){
 	if(!DEV_MODE){
 		return;
