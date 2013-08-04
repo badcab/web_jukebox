@@ -81,11 +81,23 @@ class Base {
 			return;
 		}
 
+		$file="../log/db_log.log";
+		$linecount = 0;
+		$handle = fopen($file, "r");
+		while(!feof($handle)){
+			$line = fgets($handle);
+			$linecount++;
+		}
+		fclose($handle);
+		if($linecount > 10000){
+			file_put_contents($file, '');//keep this log from getting huge
+		}
+
 		$result = '';
 		$result .= "\n" . str_pad(date('c',strtotime("now")), 80, "*", STR_PAD_BOTH) . "\n";
 		$result .= print_r($input,TRUE);
 		$result .= "\n" . str_pad($label, 80, "*", STR_PAD_BOTH) . "\n";
-		file_put_contents('../log/db_log.log', $result, FILE_APPEND);
+		file_put_contents($file, $result, FILE_APPEND);
 	}
 
 }

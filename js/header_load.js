@@ -10,7 +10,7 @@ $.each(document.styleSheets, function(i,sheet){
     if(sheet.href=='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css') {
         var rules = sheet.rules ? sheet.rules : sheet.cssRules;
         if (rules && rules.length == 0) {
-          $('<link rel="stylesheet" type="text/css" href="../css/jquery.mobile-1.3.1.min.css" />').appendTo('head');
+          document.write(unescape('%3Clink rel="stylesheet" type="text/css" href="../css/jquery.mobile-1.3.1.min.css" /%3E'));
         }
     }
-})
+});

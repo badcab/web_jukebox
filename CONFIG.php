@@ -18,17 +18,4 @@ foreach (glob(dirname(__FILE__)."/model/*.php") as $filename){
 }
 
 session_start();
-
-function loginCheck(){
-	if(!isset($_SESSION['logged_in'])){
-		$_SESSION['logged_in'] = FALSE;
-	}
-
-	if(!$_SESSION['logged_in']){
-		//die();//instead redirect to the login page
-	} 
-}
-
-loginCheck();
-
 ?>
