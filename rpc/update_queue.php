@@ -37,4 +37,17 @@
 
 	header('Content-type: application/json');
 	echo json_encode($return);
+
+debug($_POST, 'update_queue rpc');
+function debug($input, $label = ''){
+	if(!DEV_MODE){
+		return;
+	}
+
+	$result = '';
+	$result .= "\n" . str_pad(date('c',strtotime("now")), 80, "*", STR_PAD_BOTH) . "\n";
+	$result .= print_r($input,TRUE);
+	$result .= "\n" . str_pad($label, 80, "*", STR_PAD_BOTH) . "\n";
+	file_put_contents('../log/db_log.log', $result, FILE_APPEND);
+}
 ?>
