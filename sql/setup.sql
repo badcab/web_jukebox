@@ -19,14 +19,6 @@ CREATE TABLE IF NOT EXISTS `current_vote_stack` (
   PRIMARY KEY (`id_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `login` (
-  `user_name` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `is_admin` tinyint(2) NOT NULL DEFAULT 0,
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `queue` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `song_id` int(11) unsigned NOT NULL,
