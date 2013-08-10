@@ -77,7 +77,7 @@ CREATE FUNCTION ADD_QUEUE (SONG_ID INT(11)) RETURNS INT
 DETERMINISTIC
 BEGIN
   INSERT INTO `web_jukebox`.`queue` (`song_id`) VALUES (SONG_ID);
-  UPDATE  `web_jukebox`.`songs` SET  `songs`.`has_played` =  '1' WHERE  `songs`.`id` = SONG_ID;
+  UPDATE  `web_jukebox`.`songs` SET  `songs`.`has_played` =  '1' WHERE `songs`.`id` = SONG_ID;
   RETURN 0;
 END $$
 DELIMITER ;
@@ -87,6 +87,7 @@ DELIMITER $$ /*for whatever reason the db insists this function does not exist*/
 CREATE FUNCTION SAVE_VOTE_STACK ( SONG1_ID INT(11), SONG2_ID INT(11), SONG3_ID INT(11), SONG1_ARTIST varchar(50), SONG2_ARTIST varchar(50), SONG3_ARTIST varchar(50), SONG1_NAME varchar(50), SONG2_NAME varchar(50), SONG3_NAME varchar(50)) RETURNS INT
 DETERMINISTIC
 BEGIN
+--try replacing this query with nothing, then if it works a known valid sql quary then slowly replace one by one to find the bug
   INSERT INTO `web_jukebox`.`current_vote_stack` (
     `id_hash` ,
     `song1_id` ,

@@ -1,5 +1,4 @@
 $(function(){
-    $('#login_link').hide();
     $('#skip').on('click',function(){
         thinking_overlay();
         update_queue(true);
