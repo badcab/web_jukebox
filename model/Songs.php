@@ -11,7 +11,7 @@
 		for($i = 0; $i < $votePile + $queuePlay; $i++){
 			$this->db->query('CALL web_jukebox.ADD_TO_CURRENT_VOTE_STACK()');
 		}
-			
+
 		for($i = 0; $i < $queuePlay; $i++){
 			$this->db->query('CALL web_jukebox.ADD_TO_QUEUE()');
 		}
@@ -35,7 +35,7 @@
 								'artist' => $audio_tag['tags']['id3v1']['artist'][0],
 								'category' => $file,
 							);
-						} elseif(isset($audio_tag['tags']['quicktime'])) { 
+						} elseif(isset($audio_tag['tags']['quicktime'])) {
 							$dir[] = array(
 								'file_path' => $file_path,
 								'name' => $audio_tag['tags']['quicktime']['title'][0],
@@ -49,7 +49,7 @@
 								'artist' => $audio_tag['tags']['id3v2']['artist'][0],
 								'category' => $file,
 							);
-						} 
+						}
 					}
 				}
 			}
@@ -70,3 +70,4 @@
 	}
 }
 ?>
+

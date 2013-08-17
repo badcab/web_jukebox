@@ -5,6 +5,7 @@ import MySQLdb as mdb
 import sys
 import subprocess
 import time
+
 #Make sure you have run the 'scan_music_dir.php' script before running this
 
 db_host = 'localhost'

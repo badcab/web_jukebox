@@ -15,7 +15,7 @@
 		} catch (Exception $e) {
 			$this->debug($e->getMessage(),'current_vote_stack getNext');
 			return FALSE;
-		}	
+		}
 	}
 
 	public function castVote($songSlot, $id_hash){
@@ -29,7 +29,7 @@ $this->debug($id_hash,'timestamp voting on');
 				$this->debug('there was a problem getting record','castVote model');
 				return FALSE;
 			}
-			
+
 			if((int)$songSlot == 1){
 				$current['vote1']++;
 			} elseif ((int)$songSlot == 2) {
@@ -44,7 +44,7 @@ $this->debug($current,'castVote model vote to save');
 
 //$this->db->commit();
 			return TRUE;
-			
+
 		} catch (Exception $e) {
 			$this->db->rollBack();
 			$this->debug($e->getMessage(),'current_vote_stack castVote error');
@@ -53,3 +53,4 @@ $this->debug($current,'castVote model vote to save');
 	}
 }
 ?>
+
