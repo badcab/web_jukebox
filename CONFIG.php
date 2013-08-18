@@ -39,7 +39,9 @@ function rpc_debug($input, $label = ''){
 	$result .= print_r($input,TRUE);
 	$result .= "\n" . str_pad($label, 80, "*", STR_PAD_BOTH) . "\n";
 	file_put_contents($file, $result, FILE_APPEND);
-}	
+}
 
 session_start();
+//set cookie and session variables to make things a bit sticky
+//the only things saved here is the timestamp that is used for voting
 ?>
