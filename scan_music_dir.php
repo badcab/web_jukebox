@@ -1,3 +1,5 @@
+#!/usr/bin/php
+
 <?php
 	require_once('CONFIG.php');
 	#After you have put your songs in there respective folders run this to populate the
@@ -7,5 +9,5 @@
 	$Songs->scanMusicDir();
 	print_r($Songs->getAll(),TRUE);
 	$Songs->initialStartUp(5,2);
-	echo 'done, now run the python script on the box that will output the music'
+	echo 'done, now run the python script on the box that will output the music';
 ?>

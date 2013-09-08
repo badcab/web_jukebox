@@ -29,7 +29,11 @@ function cast_vote(vote_for){
 		data: {vote_for: vote_for}
 	}).done(function(){
 		update_queue(true);
-		remove_overlay();//move this to a 'complete' function
+	}).fail(function() {
+		console.log('cast_vote ajax error');
+	})
+	.always(function() {
+		remove_overlay();
 	});
 }
 
@@ -55,6 +59,6 @@ console.log(result);
 			remove_overlay();
 		}
 	}).error(function(){
-		alert('there was a problem');
-	})
+		console.log('there was a problem');
+	});
 }

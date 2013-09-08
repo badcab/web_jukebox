@@ -42,6 +42,9 @@ function rpc_debug($input, $label = ''){
 }
 
 session_start();
+date_default_timezone_set('Etc/UTC');
+
 //set cookie and session variables to make things a bit sticky
 //the only things saved here is the timestamp that is used for voting
+//have a secret way to not sticky things (for public voting)
 ?>

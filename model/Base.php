@@ -36,7 +36,7 @@ class Base {
 	public function delete($id = NULL){
 		$id = ($id) ? $id : $this->id;
 		try {
-			$this->db->delete($this->table,"{$this->pk} = {$id}");
+			$this->db->delete($this->table,array("{$this->pk} = ?" => $id));
 			return TRUE;
 		} catch (Exception $e) {
 			$this->debug($e->getMessage(),'base delete');
@@ -47,7 +47,7 @@ class Base {
 	public function save($data){
 		try {
 			if(isset($data[$this->pk]) && $data[$this->pk]){
-				$this->db->update($this->table,$data,"{$this->pk} = {$data[$this->pk]}");
+				$this->db->update($this->table,$data,array("{$this->pk} = ?" => $data[$this->pk]));
 				return $data[$this->pk];
 			} else {
 				$this->db->insert($this->table, $data);
@@ -61,15 +61,13 @@ class Base {
 
 	public function getAll(array $filter = array()){
 		try {
-			if(empty($filter)){
-				return $this->db->select()->from($this->table)->query()->fetchAll(Zend_Db::FETCH_ASSOC);
-			} else {
-				$select = $this->db->select()->from($this->table);
+			$select = $this->db->select()->from($this->table);
+			if(count($filter)){
 				foreach ($filter as $key => $value) {
 					$select->where("{$key} = ?", $value);
 				}
-				return $select->query()->fetchAll(Zend_Db::FETCH_ASSOC);
 			}
+			return $select->query()->fetchAll(Zend_Db::FETCH_ASSOC);
 		} catch (Exception $e) {
 			$this->debug($e->getMessage(),'base getAll');
 			return FALSE;
@@ -102,4 +100,3 @@ class Base {
 
 }
 ?>
-
