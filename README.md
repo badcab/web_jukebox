@@ -16,6 +16,6 @@ Install
 ===========
 clone repo in to a directory that has a webserver serving it up. place the dependencies somewhere you can get to them. Change password and paths and such in the 'CONFIG.php' file. Put a folder with subfolders containing audio files where you set the 'MUSIC_DIRECTORY' const in 'CONFIG.php'. Then run the 'setup.sql' file followed by the 'scan_music_dir.php' to populate the db with data. To start the music run the 'run_player.py' and enjoy.
 
-Comming Soon
+Android App
 ===========
-Android App version
+There is an android apk that points to the web app
