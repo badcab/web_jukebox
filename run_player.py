@@ -33,7 +33,8 @@ while True: #I will want to be able to interupt this proccess so the mc can do m
 		if con:
 			con.close()
 		if audio_file:
-			subprocess.call("mplayer " + shellquote(audio_file), shell=True)
+			subprocess.call("omxplayer " + shellquote(audio_file), shell=True)
+			#may want to switch to mplayer if on a different distro
 			audio_file = False
 		print("************-end of loop iteration-************")
 		time.sleep(1) # prevents a ton of error messages being output
