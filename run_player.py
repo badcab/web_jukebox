@@ -26,6 +26,7 @@ while True: #I will want to be able to interupt this proccess so the mc can do m
 		audio_file = query[1]
 		sql_delete = "DELETE FROM `queue` WHERE `queue`.`id` = " + str(queue_id)
 		cur.execute(sql_delete)
+		cur.execute("CALL web_jukebox.ADD_TO_QUEUE()")
 		con.commit()
 	except mdb.Error, e:
 		print "Error %d: %s" % (e.args[0],e.args[1])

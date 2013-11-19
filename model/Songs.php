@@ -9,6 +9,7 @@
 	public function initialStartUp($votePile = 5, $queuePlay = 2)
 	{
 		for($i = 0; $i < $votePile + $queuePlay; $i++){
+			sleep(1);
 			$this->db->query('CALL web_jukebox.ADD_TO_CURRENT_VOTE_STACK()');
 		}
 
