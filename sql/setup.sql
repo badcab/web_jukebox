@@ -71,15 +71,11 @@ END $$
 DELIMITER ;
 
 DROP FUNCTION IF EXISTS SAVE_VOTE_STACK;
-DELIMITER $$ /*for whatever reason the db insists this function does not exist*/
+DELIMITER $$
 CREATE FUNCTION SAVE_VOTE_STACK ( SONG1_ID INT(11), SONG2_ID INT(11), SONG3_ID INT(11), SONG1_ARTIST varchar(50), SONG2_ARTIST varchar(50), SONG3_ARTIST varchar(50), SONG1_NAME varchar(50), SONG2_NAME varchar(50), SONG3_NAME varchar(50)) RETURNS INT
 DETERMINISTIC
 BEGIN
-/*try replacing this query with nothing, then if it works a known valid sql quary then slowly replace one by one to find the bug*/
-  INSERT INTO `web_jukebox`.`current_vote_stack` (`id_hash` ,`song1_id`,`song2_id`,`song3_id`,`song1_desc`,`song2_desc`,`song3_desc`
-  ) VALUES (
-    CURRENT_TIMESTAMP , SONG1_ID, SONG2_ID, SONG3_ID, CONCAT(SONG1_NAME  ,' - ', SONG1_ARTIST), CONCAT(SONG2_NAME  ,' - ', SONG2_ARTIST), CONCAT(SONG3_NAME  ,' - ', SONG3_ARTIST)
-  );
+  INSERT INTO `web_jukebox`.`current_vote_stack` (`id_hash` ,`song1_id`,`song2_id`,`song3_id`,`song1_desc`,`song2_desc`,`song3_desc`) VALUES (CURRENT_TIMESTAMP , SONG1_ID, SONG2_ID, SONG3_ID, CONCAT(SONG1_NAME  ,' - ', SONG1_ARTIST), CONCAT(SONG2_NAME  ,' - ', SONG2_ARTIST), CONCAT(SONG3_NAME  ,' - ', SONG3_ARTIST));
   RETURN 0;
 END $$
 DELIMITER ;
@@ -175,7 +171,7 @@ DELIMITER $$
 CREATE TRIGGER `web_jukebox`.`ADD_TO_CURRENT_VOTE_STACK_trigger` AFTER DELETE ON `web_jukebox`.`queue`
 FOR EACH ROW
 BEGIN
-  CALL web_jukebox.ADD_TO_QUEUE();
+  /*CALL web_jukebox.ADD_TO_QUEUE();*/
   CALL web_jukebox.ADD_TO_CURRENT_VOTE_STACK();
 END $$
 DELIMITER ;
