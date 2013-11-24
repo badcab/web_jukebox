@@ -45,7 +45,7 @@ function update_queue(advance_by_one){
 		type: 'POST',
 		data: { advance_by_one: advance_by_one},
 	}).done(function(result){
-console.log(result);
+		console.log(result);
 		if(result.max_entropy){
 			go_dance_overlay();
 		} else if(result.update_list){

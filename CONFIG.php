@@ -1,4 +1,5 @@
 <?php
+
 if(!defined('DB_NAME')) {define('DB_NAME','web_jukebox');}
 if(!defined('DB_USER')) {define('DB_USER','root');}
 if(!defined('DB_PASSWORD')) {define('DB_PASSWORD','blizzard');}
