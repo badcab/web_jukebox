@@ -45,6 +45,7 @@ function update_queue(advance_by_one){
 		type: 'POST',
 		data: { advance_by_one: advance_by_one},
 	}).done(function(result){
+		result = eval('(' + result + ')');//some websrv are dumb and don't get that this is json
 		console.log(result);
 		if(result.max_entropy){
 			go_dance_overlay();
