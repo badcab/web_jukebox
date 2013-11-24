@@ -37,6 +37,7 @@
 		'vote1' => $next['vote1'],
 		'vote2' => $next['vote2'],
 		'vote3' => $next['vote3'],
+		'file_loc' => __FILE__,
 	);
 
 	header('Content-type: application/json');

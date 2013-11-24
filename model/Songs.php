@@ -10,11 +10,11 @@
 	{
 		for($i = 0; $i < $votePile + $queuePlay; $i++){
 			sleep(1);
-			$this->db->query('CALL web_jukebox.ADD_TO_CURRENT_VOTE_STACK()');
+			$this->db->query('CALL '. DB_NAME .'.ADD_TO_CURRENT_VOTE_STACK()');
 		}
 
 		for($i = 0; $i < $queuePlay; $i++){
-			$this->db->query('CALL web_jukebox.ADD_TO_QUEUE()');
+			$this->db->query('CALL '. DB_NAME .'.ADD_TO_QUEUE()');
 		}
 	}
 
